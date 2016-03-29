@@ -30,6 +30,7 @@ public class ViewImage extends LinearLayout implements Observer {
         image.setImageResource(getResources().getIdentifier(modelImage.resourceName, "drawable", context.getPackageName()));
 
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+        ratingBar.setRating(0);
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             public void onRatingChanged(RatingBar ratingBar, float rating,
                                         boolean fromUser) {

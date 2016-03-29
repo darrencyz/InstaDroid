@@ -29,7 +29,11 @@ public class View extends LinearLayout implements Observer {
         ViewGroup viewGroup = (ViewGroup) findViewById(R.id.contentmain);
         viewGroup.removeAllViews();
 
-        if (model.collection.size() > pictures.size()) {
+        if (model.collection.size() == 0) {
+            pictures = new ArrayList<ViewImage>();
+        }
+
+        else if (model.collection.size() > pictures.size()) {
             for (int i = pictures.size(); i < model.collection.size(); i++ ) {
                 ViewImage imageView = new ViewImage(getContext(), model.collection.get(i), model);
                 pictures.add(imageView);
