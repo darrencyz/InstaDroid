@@ -12,31 +12,37 @@ import java.util.Observer;
  * Created by dcaoyz on 2016-03-29.
  */
 public class ViewImage extends LinearLayout implements Observer {
-    private ModelImage model;
+    private ModelImage modelImage;
+    private Model model;
     private RatingBar ratingBar;
 
-    public ViewImage(Context context, ModelImage m) {
+    public ViewImage(Context context, ModelImage m, Model mod) {
         super(context);
 
         View.inflate(context, R.layout.image, this);
 
-        this.model = m;
+        modelImage = m;
         m.addObserver(this);
 
+        this.model = mod;
+
         ImageView image = (ImageView) findViewById(R.id.image);
-        image.setImageResource(getResources().getIdentifier(model.resourceName, "drawable", context.getPackageName()));
+        image.setImageResource(getResources().getIdentifier(modelImage.resourceName, "drawable", context.getPackageName()));
 
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             public void onRatingChanged(RatingBar ratingBar, float rating,
                                         boolean fromUser) {
-                model.updateRating((int) rating);
+                modelImage.updateRating((int) rating);
+                if (rating < model.filter) {
+                    model.broadcast();
+                }
             }
         });
     }
 
     @Override
     public void update(Observable observable, Object data) {
-        ratingBar.setRating(model.rating);
+        ratingBar.setRating(modelImage.rating);
     }
 }

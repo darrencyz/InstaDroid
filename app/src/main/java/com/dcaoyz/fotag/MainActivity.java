@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,14 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         model = new Model();
+
+        RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            public void onRatingChanged(RatingBar ratingBar, float rating,
+                                        boolean fromUser) {
+                model.updateRating((int) rating);
+            }
+        });
     }
 
     @Override

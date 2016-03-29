@@ -3,6 +3,8 @@ package com.dcaoyz.fotag;
 import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -11,7 +13,7 @@ import java.util.Observer;
  */
 public class View extends LinearLayout implements Observer {
     private Model model;
-    // maybe add collection
+    private ArrayList<ViewImage> pictures = new ArrayList<ViewImage>();
 
     public View(Context context, Model m) {
         super(context);
@@ -20,12 +22,6 @@ public class View extends LinearLayout implements Observer {
 
         this.model = m;
         m.addObserver(this);
-
-        for (int i = 0; i < model.collection.size(); i++) {
-            ViewImage imageView = new ViewImage(getContext(), model.collection.get(i));
-            ViewGroup viewGroup = (ViewGroup) findViewById(R.id.contentmain);
-            viewGroup.addView(imageView);
-        }
     }
 
     @Override
@@ -33,9 +29,17 @@ public class View extends LinearLayout implements Observer {
         ViewGroup viewGroup = (ViewGroup) findViewById(R.id.contentmain);
         viewGroup.removeAllViews();
 
+        if (model.collection.size() > pictures.size()) {
+            for (int i = pictures.size(); i < model.collection.size(); i++ ) {
+                ViewImage imageView = new ViewImage(getContext(), model.collection.get(i), model);
+                pictures.add(imageView);
+            }
+        }
+
         for (int i = 0; i < model.collection.size(); i++) {
-            ViewImage imageView = new ViewImage(getContext(), model.collection.get(i));
-            viewGroup.addView(imageView);
+            if (model.collection.get(i).rating >= model.filter) {
+                viewGroup.addView(pictures.get(i));
+            }
         }
     }
 }
