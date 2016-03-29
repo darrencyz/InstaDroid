@@ -6,29 +6,29 @@ import java.util.ArrayList;
 /**
  * Created by dcaoyz on 2016-03-27.
  */
-public class Model extends Observable implements IRating {
-    ArrayList<ImageModel> collection = new ArrayList<ImageModel>();
+public class Model extends Observable {
+    ArrayList<ModelImage> collection = new ArrayList<ModelImage>();
     int filter = 0;
 
     Model() {
         setChanged();
     }
 
-    public void addImage(ImageModel image) {
+    public void addImage(ModelImage image) {
         collection.add(image);
         setChanged();
         notifyObservers();
     }
 
-    @Override
-    public void updateRating(int rating) {
-        filter = rating;
+    public void clear() {
+        collection = new ArrayList<ModelImage>();
         setChanged();
         notifyObservers();
     }
 
-    @Override
-    public int getRating() {
-        return filter;
+    public void updateRating(int rating) {
+        filter = rating;
+        setChanged();
+        notifyObservers();
     }
 }
