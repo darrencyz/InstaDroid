@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         android:id="@+id/mainactivity"
         android:gravity="center_horizontal"
+        android:background="#424242"
         android:orientation="vertical">
 
         <android.support.design.widget.AppBarLayout
