@@ -3,6 +3,7 @@ package com.dcaoyz.fotag;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -29,6 +30,11 @@ public class MainActivity extends AppCompatActivity {
                 model.updateRating((int) rating);
             }
         });
+//        Log.e("MVC", "create");
+//        if (savedInstanceState != null) {
+//            Log.e("MVC", "createsave");
+//            ratingBar.setRating(savedInstanceState.getInt("Filter"));
+//        }
     }
 
     @Override
@@ -72,4 +78,27 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//        outState.putInt("Filter", model.filter);
+//        Log.e("MVC", "save");
+//        super.onSaveInstanceState(outState);
+//    }
+//
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        Log.e("MVC", "onresume");
+//    }
+//
+//    @Override
+//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//        model.updateRating(savedInstanceState.getInt("Filter"));
+//        Log.e("MVC", "restore");
+//        Log.e("MVC", String.valueOf(model.filter));
+//        RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+//        ratingBar.setRating(savedInstanceState.getInt("Filter"));
+//        super.onRestoreInstanceState(savedInstanceState);
+//    }
 }

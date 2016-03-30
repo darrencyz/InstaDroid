@@ -1,6 +1,9 @@
 package com.dcaoyz.fotag;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,6 +31,14 @@ public class ViewImage extends LinearLayout implements Observer {
 
         ImageView image = (ImageView) findViewById(R.id.image);
         image.setImageResource(getResources().getIdentifier(modelImage.resourceName, "drawable", context.getPackageName()));
+        image.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), FullViewActivity.class);
+                intent.putExtra("image", modelImage.resourceName);
+                getContext().startActivity(intent);
+            }
+        });
 
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         ratingBar.setRating(0);

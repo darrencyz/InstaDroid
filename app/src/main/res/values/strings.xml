@@ -4,4 +4,5 @@
     <string name="action_search">Search</string>
     <string name="action_add_photos">Add</string>
     <string name="action_clear">Clear</string>
+    <string name="title_activity_full_view">Full View</string>
 </resources>
