@@ -30,12 +30,18 @@ public class ViewImage extends LinearLayout implements Observer {
         this.model = mod;
 
         ImageView image = (ImageView) findViewById(R.id.image);
-        image.setImageResource(getResources().getIdentifier(modelImage.resourceName, "drawable", context.getPackageName()));
+        if (modelImage.isUrl) {
+            new UrlImageTask(image).execute(modelImage.resourceName);
+        }
+        else {
+            image.setImageResource(getResources().getIdentifier(modelImage.resourceName, "drawable", context.getPackageName()));
+        }
         image.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), FullViewActivity.class);
                 intent.putExtra("image", modelImage.resourceName);
+                intent.putExtra("isUrl", String.valueOf(modelImage.isUrl));
                 getContext().startActivity(intent);
             }
         });

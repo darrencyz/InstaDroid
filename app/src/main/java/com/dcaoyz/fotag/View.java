@@ -2,6 +2,8 @@ package com.dcaoyz.fotag;
 
 import android.content.Context;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -35,6 +37,7 @@ public class View extends LinearLayout implements Observer {
 
         else if (model.collection.size() > pictures.size()) {
             for (int i = pictures.size(); i < model.collection.size(); i++ ) {
+                //ViewImage imageView = model.collection.get(i).getImage();
                 ViewImage imageView = new ViewImage(getContext(), model.collection.get(i), model);
                 pictures.add(imageView);
             }
@@ -45,5 +48,8 @@ public class View extends LinearLayout implements Observer {
                 viewGroup.addView(pictures.get(i));
             }
         }
+
+        //GridView gridView = (GridView) findViewById(R.id.gridView);
+        //gridView.setAdapter();
     }
 }
