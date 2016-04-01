@@ -3,25 +3,20 @@ package com.dcaoyz.fotag;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RatingBar;
-import android.widget.TextView;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private RetainedFragment dataFragment;
@@ -33,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         FragmentManager fm = getFragmentManager();
         dataFragment = (RetainedFragment) fm.findFragmentByTag("dataFragment");
@@ -46,11 +43,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         model = dataFragment.getModel();
-
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
-        //model = new Model();
 
         RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -70,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         ViewGroup viewGroup = (ViewGroup) findViewById(R.id.mainactivity);
         viewGroup.addView(view);
 
-        model.notifyObservers();
+        model.broadcast();
     }
 
     @Override
@@ -82,12 +74,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_add_photos) {
             for (int i = 0; i < 1; i++) {
                 model.addImage(new ModelImage("image" + i));
@@ -104,27 +92,17 @@ public class MainActivity extends AppCompatActivity {
             final android.view.View searchDialog = LayoutInflater.from(this).inflate(R.layout.search_dialog, null);
             final EditText userInput = (EditText) searchDialog.findViewById(R.id.urlField);
 
-            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-            builder1.setMessage("Invalid Image URL!");
-            builder1.setCancelable(true);
-
-            builder1.setPositiveButton(
+            AlertDialog.Builder errorBuilder = new AlertDialog.Builder(this);
+            errorBuilder.setMessage("Invalid Image URL!");
+            errorBuilder.setCancelable(true);
+            errorBuilder.setPositiveButton(
                     "Dismiss",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
                         }
                     });
-
-//            builder1.setNegativeButton(
-//                    "No",
-//                    new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int id) {
-//                            dialog.cancel();
-//                        }
-//                    });
-
-            final AlertDialog alert11 = builder1.create();
+            final AlertDialog errorDialog = errorBuilder.create();
 
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             alertDialogBuilder.setView(searchDialog);
@@ -148,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                             model.addImage(image);
                         }
                         else {
-                            alert11.show();
+                            errorDialog.show();
                         }
                     }
                 });
@@ -159,19 +137,19 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
             alertDialogBuilder.setCancelable(false);
-
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-//    @Override
-//    public void onStop() {
-//        super.onStop();
-//        // store the data in the fragment
-//        dataFragment.setModel(model);
-//    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // store the data in the fragment
+        dataFragment.setModel(model);
+    }
 }

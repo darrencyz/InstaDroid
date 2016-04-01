@@ -2,7 +2,6 @@ package com.dcaoyz.fotag;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.view.*;
 
 /**
  * Created by dcaoyz on 2016-04-01.
