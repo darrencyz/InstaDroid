@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_add_photos) {
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 10; i++) {
                 model.addImage(new ModelImage("image" + i));
             }
             return true;
