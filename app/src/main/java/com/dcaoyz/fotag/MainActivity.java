@@ -43,6 +43,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         model = dataFragment.getModel();
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
 
         RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -51,11 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 model.updateRating((int) rating);
             }
         });
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
+        ratingBar.setRating(model.filter);
 
         // add views
         View view = new View(this, model);
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_add_photos) {
-            for (int i = 0; i < 1; i++) {
+            for (int i = 0; i < 3; i++) {
                 model.addImage(new ModelImage("image" + i));
             }
             return true;

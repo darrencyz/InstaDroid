@@ -38,9 +38,6 @@
                 android:isIndicator="false"/>
 
             </android.support.v7.widget.Toolbar>
-
         </android.support.design.widget.AppBarLayout>
-
     </LinearLayout>
-
 </android.support.design.widget.CoordinatorLayout>

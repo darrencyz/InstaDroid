@@ -28,6 +28,7 @@ public class ViewImage extends LinearLayout implements Observer {
         m.addObserver(this);
 
         this.model = mod;
+        model.addObserver(this);
 
         ImageView image = (ImageView) findViewById(R.id.image);
         if (modelImage.isUrl) {
@@ -47,7 +48,6 @@ public class ViewImage extends LinearLayout implements Observer {
         });
 
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
-        ratingBar.setRating(0);
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             public void onRatingChanged(RatingBar ratingBar, float rating,
                                         boolean fromUser) {
@@ -57,6 +57,7 @@ public class ViewImage extends LinearLayout implements Observer {
                 }
             }
         });
+        ratingBar.setRating(modelImage.rating);
     }
 
     @Override
